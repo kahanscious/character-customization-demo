@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://cs01eugmslsxv"]
+
+[ext_resource type="Theme" uid="uid://cafmughitgcr1" path="res://resources/ui_theme.tres" id="1_eq6bc"]
+[ext_resource type="PackedScene" uid="uid://cn6h7ql6gvrhn" path="res://scenes/customization_panel.tscn" id="2_v40tj"]
+[ext_resource type="PackedScene" uid="uid://cdrr8dl1ao3th" path="res://scenes/character.tscn" id="2_xtni1"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_eq6bc")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Preview" type="SubViewportContainer" parent="HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SubViewport" type="SubViewport" parent="HSplitContainer/Preview"]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Character" parent="HSplitContainer/Preview/SubViewport" instance=ExtResource("2_xtni1")]
+
+[node name="CustomizationPanel" parent="HSplitContainer" instance=ExtResource("2_v40tj")]
+layout_mode = 2
