@@ -1,11 +1,12 @@
 extends Panel
 
-@onready var color_picker: ColorPickerButton = $MarginContainer/ColorPickerButton
+@onready var color_picker: ColorPickerButton = $MarginContainer/VBoxContainer/ColorPickerButton
 
 
 func _ready() -> void:
 	color_picker.color = CustomizationManager.character_data.skin_color
 	color_picker.color_changed.connect(_on_color_changed)
+	_setup_presets()
 
 
 func _on_color_changed(color: Color) -> void:

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cs01eugmslsxv"]
+[gd_scene load_steps=5 format=3 uid="uid://cs01eugmslsxv"]
 
 [ext_resource type="Theme" uid="uid://cafmughitgcr1" path="res://resources/ui_theme.tres" id="1_eq6bc"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="2_v6wjf"]
 [ext_resource type="PackedScene" uid="uid://cn6h7ql6gvrhn" path="res://scenes/customization_panel.tscn" id="2_v40tj"]
 [ext_resource type="PackedScene" uid="uid://cdrr8dl1ao3th" path="res://scenes/character.tscn" id="2_xtni1"]
 
@@ -12,22 +13,44 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_eq6bc")
+script = ExtResource("2_v6wjf")
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 250
 
-[node name="Preview" type="SubViewportContainer" parent="HSplitContainer"]
+[node name="CharacterPreviewPanel" type="Panel" parent="HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SubViewport" type="SubViewport" parent="HSplitContainer/Preview"]
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/CharacterPreviewPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/CharacterPreviewPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HSplitContainer/CharacterPreviewPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SubViewport" type="SubViewport" parent="HSplitContainer/CharacterPreviewPanel/MarginContainer/VBoxContainer/SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
+size = Vector2i(480, 480)
 render_target_update_mode = 4
 
-[node name="Character" parent="HSplitContainer/Preview/SubViewport" instance=ExtResource("2_xtni1")]
+[node name="Character" parent="HSplitContainer/CharacterPreviewPanel/MarginContainer/VBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("2_xtni1")]
 
 [node name="CustomizationPanel" parent="HSplitContainer" instance=ExtResource("2_v40tj")]
 layout_mode = 2

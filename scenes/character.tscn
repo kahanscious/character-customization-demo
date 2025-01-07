@@ -12,11 +12,9 @@ script = ExtResource("1_h0kc6")
 [node name="Sprites" type="Node2D" parent="."]
 
 [node name="Base" type="Sprite2D" parent="Sprites"]
-position = Vector2(271, 81)
 texture = ExtResource("1_yhpee")
 hframes = 8
 vframes = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(271, 78)
 shape = SubResource("RectangleShape2D_uxpha")
