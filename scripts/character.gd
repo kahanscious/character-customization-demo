@@ -1,14 +1,22 @@
 class_name Character extends CharacterBody2D
 
-@onready var base_sprite: Sprite2D = $Sprites/Base
 @onready var sprites: Node2D = $Sprites
+@onready var base_sprite: Sprite2D = $Sprites/Base
+@onready var outfit_sprite: Sprite2D = $Sprites/Outfit
 
 var is_preview: bool = false
 
 
 func _ready() -> void:
+	outfit_sprite.hframes = 8
+	outfit_sprite.vframes = 8
+	outfit_sprite.frame = 0
+
 	CustomizationManager.color_updated.connect(_on_color_updated)
+	CustomizationManager.customization_updated.connect(_on_customization_updated)
+
 	_update_color(CustomizationManager.character_data.skin_color)
+	_update_character()
 
 
 func set_as_preview() -> void:
@@ -23,6 +31,23 @@ func _on_color_updated(color: Color) -> void:
 
 func _update_color(color: Color) -> void:
 	base_sprite.modulate = color
+
+
+func _update_character() -> void:
+	var data := CustomizationManager.character_data
+
+	base_sprite.modulate = data.skin_color
+
+	if data.selected_outfit >= 0:
+		outfit_sprite.texture = CustomizationManager.outfit_options[data.selected_outfit].texture
+		outfit_sprite.modulate = data.outfit_color
+		outfit_sprite.visible = true
+	else:
+		outfit_sprite.visible = false
+
+
+func _on_customization_updated() -> void:
+	_update_character()
 
 
 func _draw() -> void:

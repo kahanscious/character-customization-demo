@@ -1,4 +1,11 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cafmughitgcr1"]
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://cafmughitgcr1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3bd3"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tfc4d"]
 bg_color = Color(0.117647, 0.117647, 0.117647, 1)
@@ -8,4 +15,13 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
 [resource]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/styles/normal = SubResource("StyleBoxFlat_y3bd3")
+MarginContainer/constants/margin_bottom = 16
+MarginContainer/constants/margin_left = 16
+MarginContainer/constants/margin_right = 16
+MarginContainer/constants/margin_top = 16
+OptionButton/constants/arrow_margin = 8
 Panel/styles/panel = SubResource("StyleBoxFlat_tfc4d")
+VBoxContainer/constants/separation = 12

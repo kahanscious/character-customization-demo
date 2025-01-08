@@ -1,13 +1,16 @@
 extends Node
 
 signal color_updated(color: Color)
+signal customization_updated
 
 var character_data: CharacterData
+var outfit_options: Array[CustomizationOption] = []
 
 
 func _ready() -> void:
 	character_data = CharacterData.new()
 	print("Manager initialized with skin color: ", character_data.skin_color)
+	_load_customization_options()
 
 
 func update_skin_color(new_color: Color) -> void:
@@ -20,3 +23,52 @@ func update_skin_color(new_color: Color) -> void:
 
 	character_data.skin_color = new_color
 	color_updated.emit(new_color)
+
+
+func update_part(part: CharacterData.BodyPart, index: int) -> void:
+	match part:
+		CharacterData.BodyPart.OUTFIT:
+			character_data.selected_outfit = index
+	customization_updated.emit()
+
+
+func update_color(part: CharacterData.BodyPart, color: Color) -> void:
+	match part:
+		CharacterData.BodyPart.OUTFIT:
+			character_data.outfit_color = color
+		CharacterData.BodyPart.BASE:
+			character_data.skin_color = color
+	customization_updated.emit()
+
+
+func _load_customization_options() -> void:
+	_add_option(outfit_options, "res://assets/outfit_1.png", "Casual Outfit")
+	_add_option(outfit_options, "res://assets/outfit_2.png", "Formal Outfit")
+
+
+func _add_option(array: Array[CustomizationOption], path: String, name: String) -> void:
+	var option := CustomizationOption.new()
+	if ResourceLoader.exists(path):
+		option.texture = load(path)
+		option.name = name
+		array.append(option)
+	else:
+		push_warning("Resource not found: ", path)
+
+
+func randomize_character() -> void:
+	if outfit_options.is_empty():
+		push_warning("No outfits available")
+		return
+
+	character_data.outfit_color = Color(
+		randf_range(0.2, 1.0), randf_range(0.2, 1.0), randf_range(0.2, 1.0), 1.0
+	)
+	character_data.selected_outfit = randi() % outfit_options.size()
+	customization_updated.emit()
+
+
+func reset_character() -> void:
+	character_data.selected_outfit = -1
+	character_data.outfit_color = Color(1, 1, 1, 1)
+	customization_updated.emit()
