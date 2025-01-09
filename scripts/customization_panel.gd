@@ -29,6 +29,12 @@ func _create_sections() -> void:
 	_add_option_section(
 		"Outfit", CharacterData.BodyPart.OUTFIT, CustomizationManager.outfit_options, true, true
 	)
+	_add_option_section(
+		"Hair Style", CharacterData.BodyPart.HAIR, CustomizationManager.hair_options, true, true
+	)
+	_add_option_section(
+		"Hat", CharacterData.BodyPart.HAT, CustomizationManager.hat_options, true, true
+	)
 
 
 func _add_color_section(title: String, part: CharacterData.BodyPart, initial_color: Color) -> void:

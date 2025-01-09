@@ -17,12 +17,32 @@ const OUTFIT_COLORS := [
 	Color(1.0, 1.0, 1.0),  # White - maximum tinting flexibility
 ]
 
+const HAIR_COLORS := [
+	Color(0.1, 0.1, 0.1),  # Black
+	Color(0.3, 0.2, 0.1),  # Brown
+	Color(0.8, 0.7, 0.5),  # Blonde
+	Color(0.5, 0.3, 0.1),  # Auburn
+	Color(0.7, 0.7, 0.7),  # Gray
+]
+
+const SKIN_COLORS := [
+	Color(0.98, 0.84, 0.65),  # Light
+	Color(0.85, 0.65, 0.45),  # Medium
+	Color(0.65, 0.45, 0.25),  # Dark
+	Color(0.95, 0.75, 0.55),  # Warm
+	Color(0.85, 0.75, 0.65),  # Cool
+]
+
 var has_none_option: bool = false
 var current_color: Color
 
 
 func setup(
-	title: String, options: Array, initial_selection: int = 0, show_color: bool = false
+	title: String,
+	options: Array,
+	initial_selection: int = 0,
+	show_color: bool = false,
+	color_type: String = ""
 ) -> void:
 	title_label.text = title
 	option_button.item_selected.connect(_on_option_selected)
@@ -30,7 +50,6 @@ func setup(
 	if options.is_empty():
 		option_button.visible = false
 	else:
-		option_button.clear()
 		for option in options:
 			option_button.add_item(option)
 
@@ -38,13 +57,19 @@ func setup(
 			option_button.selected = initial_selection + (1 if has_none_option else 0)
 
 	if show_color:
-		_setup_color_swatches()
+		match color_type:
+			"hair":
+				_setup_color_swatches(HAIR_COLORS)
+			"skin":
+				_setup_color_swatches(SKIN_COLORS)
+			_:
+				_setup_color_swatches(OUTFIT_COLORS)
 	else:
 		color_grid.visible = false
 
 
-func _setup_color_swatches() -> void:
-	for color in OUTFIT_COLORS:
+func _setup_color_swatches(colors: Array) -> void:
+	for color in colors:
 		var button := Button.new()
 		button.custom_minimum_size = Vector2(30, 30)
 
